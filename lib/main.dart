@@ -1,33 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:stocky/screens/createstock.dart';
 import 'package:stocky/screens/stock.dart';
+import 'package:stocky/inherited.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(MiApp());
 
-class MyApp extends StatelessWidget {
-
+class MiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return StockedContainer(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Stocky',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: PaginaVisualizacion(),
       ),
-      home: StockPageState(),
-      routes: <String, WidgetBuilder>{
-        '/createstock': (BuildContext context) => CreateStock(),
-      },
     );
-  }
-}
-
-class Stock extends StatefulWidget {
-  @override
-  StockState createState() => StockState();
-}
-
-class StockState extends State<Stock> {
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder();
   }
 }

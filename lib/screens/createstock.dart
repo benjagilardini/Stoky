@@ -1,58 +1,123 @@
+import 'package:stocky/screens/stock.dart';
 import 'package:flutter/material.dart';
+import 'package:stocky/inherited.dart';
 
-class CreateStock extends StatelessWidget {
-  final _nameController = TextEditingController();
-  final _descriptionController = TextEditingController();
+class PaginaCreacion extends StatefulWidget {
+  PaginaCreacion({Key key}) : super(key: key);
+
+  @override
+  _PaginaCreaciState createState() => _PaginaCreaciState();
+}
+
+class _PaginaCreaciState extends State<PaginaCreacion> {
+  final myController = TextEditingController();
+  final myController2 = TextEditingController();
+  final myController3 = TextEditingController();
+  bool _validate = false;
+  bool _validate2 = false;
+  bool _validate3 = false;
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+
+  _agregar() {
+    if (myController.value.text != null && myController.value.text.isNotEmpty) {
+      if (myController2.value.text != null &&
+          myController2.value.text.isNotEmpty) {
+        if (myController3.value.text != null &&
+            myController3.value.text.isNotEmpty) {
+          StockedInherited.of(context).addStocked(Stocked(
+              myController.value.text,
+              myController2.value.text,
+              myController3.value.text));
+
+          myController.clear();
+          myController2.clear();
+          Navigator.pop(
+            context,
+            MaterialPageRoute(builder: (context) => PaginaVisualizacion()),
+          );
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Crear un item"),
+        title: Text("Agregar"),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextField(
-                controller: _nameController,
-                decoration: InputDecoration(hintText: 'Nombre'),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-              ),
-              TextField(
-                controller: _descriptionController,
-                decoration: InputDecoration(hintText: 'Descripcion'),
-              ),
-              buildBtnSubmit()
-            ],
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: <Widget>[
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextField(
+                  controller: myController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Ingresar titutlo',
+                    errorText: _validate ? 'Debes ingresar un texto' : null,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                ),
+                TextField(
+                  controller: myController2,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Ingresar descripcion',
+                    errorText: _validate2 ? 'Debes ingresar un texto' : null,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                ),
+                TextField(
+                  keyboardType: TextInputType.number,
+                  controller: myController3,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Ingresar cantidad',
+                    errorText: _validate3 ? 'Debes ingresar un numero' : null,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: MaterialButton(
+                    child: Text(
+                      'Guardar',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    color: Colors.blue,
+                    onPressed: () {
+                      setState(() {
+                        myController.text.isEmpty
+                            ? _validate = true
+                            : _validate = false;
+                        myController2.text.isEmpty
+                            ? _validate2 = true
+                            : _validate2 = false;
+                        myController3.text.isEmpty
+                            ? _validate3 = true
+                            : _validate3 = false;
+                      });
+                      _agregar();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
-}
-
-Widget buildBtnSubmit() {
-  return Padding(
-    padding: EdgeInsets.all(15),
-    child: SizedBox(
-      width: 200,
-      height: 50,
-      child: RaisedButton(
-        color: Colors.green,
-        elevation: 6,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        onPressed: () {},
-        child: Text(
-          'Generar Producto',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),
-        ),
-      ),
-    ),
-  );
 }
