@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:stocky/screens/createstock.dart';
 import 'package:stocky/inherited.dart';
 import 'package:http/http.dart' as http;
@@ -13,15 +14,17 @@ class PaginaVisualizacion extends StatefulWidget {
 
 class _PaginaVisualState extends State<PaginaVisualizacion> {
   var stocklist = <Stocked>[];
-  
-  getJsonData() async {
 
+  getJsonData() async {
     var response = await http.get('http://172.20.10.3:8080/apistock/stock/');
     print(response.body);
-    stocklist.clear();
-    json
-        .decode(response.body)
-        .forEach((el) => stocklist.add(new Stocked.fromJson(el)));
+
+    setState(() {
+      stocklist.clear();
+      json
+          .decode(response.body)
+          .forEach((el) => stocklist.add(new Stocked.fromJson(el)));
+    });
   }
 
   _makeDeleteRequest(int id) async {
@@ -32,12 +35,24 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     getJsonData();
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Stocky"),
+        actions: <Widget>[
+          new IconButton(
+              icon: const Icon(Icons.refresh),
+              tooltip: 'Refresh',
+              onPressed: () {
+                getJsonData();
+              }),
+        ],
       ),
       body: Container(
         padding: EdgeInsets.all(20),
@@ -56,43 +71,43 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
                       child: CircularProgressIndicator(),
                     );
                   } else {
-                  return Container(
-                    padding: EdgeInsets.all(5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Text(stocklist[i].cantidad.toString(),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                                Text(' | ' + stocklist[i].nombre,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
-                              ],
-                            ),
-                            Container(
-                              width: 280,
-                              child: Text(stocklist[i].descripcion),
-                            )
-                          ],
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            _makeDeleteRequest(stocklist[i].id);
-                          },
-                          color: Colors.blue,
-                          icon: Icon(Icons.delete_outline),
-                        ),
-                      ],
-                    ),
-                  );
+                    return Container(
+                      padding: EdgeInsets.all(5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text(stocklist[i].cantidad.toString(),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
+                                  Text(' | ' + stocklist[i].nombre,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18)),
+                                ],
+                              ),
+                              Container(
+                                width: 280,
+                                child: Text(stocklist[i].descripcion),
+                              )
+                            ],
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              _makeDeleteRequest(stocklist[i].id);
+                            },
+                            color: Colors.blue,
+                            icon: Icon(Icons.delete_outline),
+                          ),
+                        ],
+                      ),
+                    );
                   }
                 },
               ),

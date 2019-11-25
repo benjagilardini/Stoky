@@ -36,6 +36,7 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
         }));
 
     Navigator.of(context).pop();
+    // Navigator.push(context, MaterialPageRoute(builder: (context) => PaginaVisualizacion()));
   }
 
   @override
