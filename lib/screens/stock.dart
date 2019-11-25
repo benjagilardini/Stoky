@@ -13,10 +13,11 @@ class PaginaVisualizacion extends StatefulWidget {
 
 class _PaginaVisualState extends State<PaginaVisualizacion> {
   var stocklist = <Stocked>[];
-
+  
   getJsonData() async {
-    var response = await http.get('http://172.20.10.3:8080/apistock/stock/');
 
+    var response = await http.get('http://172.20.10.3:8080/apistock/stock/');
+    print(response.body);
     stocklist.clear();
     json
         .decode(response.body)
@@ -24,10 +25,9 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
   }
 
   _makeDeleteRequest(int id) async {
-    String url = 'http://172.20.10.3:8080/apistock/stock/'+id.toString()+'/';
-    
-    await http.delete(url);
-
+    await http.delete(
+        'http://172.20.10.3:8080/apistock/stock/' + id.toString() + '/');
+    stocklist.removeWhere((item) => item.id == id);
     setState(() {});
   }
 
@@ -44,55 +44,59 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
         child: Column(
           children: <Widget>[
             Expanded(
-                child: ListView.separated(
-                    separatorBuilder: (context, index) => Divider(
-                          color: Colors.black,
-                        ),
-                    itemCount: stocklist.length,
-                    itemBuilder: (BuildContext context, int i) {
-                      if (stocklist.length <= 0) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      return Container(
-                        padding: EdgeInsets.all(5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: ListView.separated(
+                separatorBuilder: (context, index) => Divider(
+                  color: Colors.black,
+                ),
+                itemCount: stocklist.length,
+                itemBuilder: (BuildContext context, int i) {
+                  print(stocklist.length);
+                  if (stocklist.isEmpty) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                  return Container(
+                    padding: EdgeInsets.all(5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(
                               children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Text(stocklist[i].cantidad.toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18)),
-                                    Text(' | ' + stocklist[i].nombre,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18)),
-                                  ],
-                                ),
-                                Container(
-                                  width: 280,
-                                  child: Text(stocklist[i].descripcion),
-                                )
+                                Text(stocklist[i].cantidad.toString(),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18)),
+                                Text(' | ' + stocklist[i].nombre,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18)),
                               ],
                             ),
-                            IconButton(
-                              onPressed: () {
-                                _makeDeleteRequest(stocklist[i].id);
-                              },
-                              color: Colors.blue,
-                              icon: Icon(Icons.delete_outline),
-                            ),
+                            Container(
+                              width: 280,
+                              child: Text(stocklist[i].descripcion),
+                            )
                           ],
                         ),
-                      );
-                    })),
+                        IconButton(
+                          onPressed: () {
+                            _makeDeleteRequest(stocklist[i].id);
+                          },
+                          color: Colors.blue,
+                          icon: Icon(Icons.delete_outline),
+                        ),
+                      ],
+                    ),
+                  );
+                  }
+                },
+              ),
+            ),
           ],
         ),
       ),

@@ -1,7 +1,9 @@
 import 'package:stocky/screens/stock.dart';
 import 'package:flutter/material.dart';
 import 'package:stocky/inherited.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:convert' as JSON;
 
 class PaginaCreacion extends StatefulWidget {
   PaginaCreacion({Key key}) : super(key: key);
@@ -24,26 +26,16 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
     super.dispose();
   }
 
-  _agregar() {
-    // if (myController.value.text != null && myController.value.text.isNotEmpty) {
-    //   if (myController2.value.text != null &&
-    //       myController2.value.text.isNotEmpty) {
-    //     if (myController3.value.text != null &&
-    //         myController3.value.text.isNotEmpty) {
-    //       StockedInherited.of(context).addStocked(Stocked(
-    //           myController.value.text,
-    //           myController2.value.text,
-    //           myController3.value.text));
+  _addStock() async {
+    await http.post('http://172.20.10.3:8080/apistock/stock/',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.jsonEncode({
+          "nombre": myController.text,
+          "descripcion": myController2.text,
+          "cantidad": myController3.text,
+        }));
 
-    //       myController.clear();
-    //       myController2.clear();
-    //       Navigator.pop(
-    //         context,
-    //         MaterialPageRoute(builder: (context) => PaginaVisualizacion()),
-    //       );
-    //     }
-    //   }
-    // }
+    Navigator.of(context).pop();
   }
 
   @override
@@ -110,7 +102,7 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
                             ? _validate3 = true
                             : _validate3 = false;
                       });
-                      _agregar();
+                      _addStock();
                     },
                   ),
                 ),
