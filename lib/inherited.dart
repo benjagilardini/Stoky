@@ -60,9 +60,17 @@ class StockedInherited extends InheritedWidget {
 }
 
 class Stocked {
+  int id;
   String nombre;
   String descripcion;
-  String cantidad;
+  int cantidad;
 
   Stocked(this.nombre, this.descripcion, this.cantidad);
+
+  Stocked.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    nombre = json['nombre'];
+    descripcion = json['descripcion'];
+    cantidad = json['cantidad'];
+  }
 }

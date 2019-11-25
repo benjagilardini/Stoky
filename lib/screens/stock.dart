@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stocky/screens/createstock.dart';
 import 'package:stocky/inherited.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class PaginaVisualizacion extends StatefulWidget {
   PaginaVisualizacion({Key key}) : super(key: key);
@@ -10,8 +12,29 @@ class PaginaVisualizacion extends StatefulWidget {
 }
 
 class _PaginaVisualState extends State<PaginaVisualizacion> {
+  var stocklist = <Stocked>[];
+
+  getJsonData() async {
+    var response = await http.get('http://172.20.10.3:8080/apistock/stock/');
+
+    stocklist.clear();
+    json
+        .decode(response.body)
+        .forEach((el) => stocklist.add(new Stocked.fromJson(el)));
+  }
+
+  _makeDeleteRequest(int id) async {
+    String url = 'http://172.20.10.3:8080/apistock/stock/'+id.toString()+'/';
+    
+    await http.delete(url);
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    getJsonData();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Stocky"),
@@ -25,8 +48,13 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
                     separatorBuilder: (context, index) => Divider(
                           color: Colors.black,
                         ),
-                    itemCount: StockedInherited.of(context).stockedArray.length,
+                    itemCount: stocklist.length,
                     itemBuilder: (BuildContext context, int i) {
+                      if (stocklist.length <= 0) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
                       return Container(
                         padding: EdgeInsets.all(5),
                         child: Row(
@@ -38,18 +66,11 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
                               children: <Widget>[
                                 Row(
                                   children: <Widget>[
-                                    Text(
-                                        StockedInherited.of(context)
-                                            .stockedArray[i]
-                                            .cantidad,
+                                    Text(stocklist[i].cantidad.toString(),
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18)),
-                                    Text(
-                                        ' | ' +
-                                            StockedInherited.of(context)
-                                                .stockedArray[i]
-                                                .nombre,
+                                    Text(' | ' + stocklist[i].nombre,
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18)),
@@ -57,15 +78,13 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
                                 ),
                                 Container(
                                   width: 280,
-                                  child: Text(StockedInherited.of(context)
-                                      .stockedArray[i]
-                                      .descripcion),
+                                  child: Text(stocklist[i].descripcion),
                                 )
                               ],
                             ),
                             IconButton(
                               onPressed: () {
-                                StockedInherited.of(context).deleteStocked(i);
+                                _makeDeleteRequest(stocklist[i].id);
                               },
                               color: Colors.blue,
                               icon: Icon(Icons.delete_outline),

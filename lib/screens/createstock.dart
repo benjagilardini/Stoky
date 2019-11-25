@@ -2,6 +2,7 @@ import 'package:stocky/screens/stock.dart';
 import 'package:flutter/material.dart';
 import 'package:stocky/inherited.dart';
 
+
 class PaginaCreacion extends StatefulWidget {
   PaginaCreacion({Key key}) : super(key: key);
 
@@ -24,25 +25,25 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
   }
 
   _agregar() {
-    if (myController.value.text != null && myController.value.text.isNotEmpty) {
-      if (myController2.value.text != null &&
-          myController2.value.text.isNotEmpty) {
-        if (myController3.value.text != null &&
-            myController3.value.text.isNotEmpty) {
-          StockedInherited.of(context).addStocked(Stocked(
-              myController.value.text,
-              myController2.value.text,
-              myController3.value.text));
+    // if (myController.value.text != null && myController.value.text.isNotEmpty) {
+    //   if (myController2.value.text != null &&
+    //       myController2.value.text.isNotEmpty) {
+    //     if (myController3.value.text != null &&
+    //         myController3.value.text.isNotEmpty) {
+    //       StockedInherited.of(context).addStocked(Stocked(
+    //           myController.value.text,
+    //           myController2.value.text,
+    //           myController3.value.text));
 
-          myController.clear();
-          myController2.clear();
-          Navigator.pop(
-            context,
-            MaterialPageRoute(builder: (context) => PaginaVisualizacion()),
-          );
-        }
-      }
-    }
+    //       myController.clear();
+    //       myController2.clear();
+    //       Navigator.pop(
+    //         context,
+    //         MaterialPageRoute(builder: (context) => PaginaVisualizacion()),
+    //       );
+    //     }
+    //   }
+    // }
   }
 
   @override
