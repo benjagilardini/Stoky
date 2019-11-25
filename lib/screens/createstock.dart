@@ -27,7 +27,7 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
   }
 
   _addStock() async {
-    await http.post('http://172.20.10.3:8080/apistock/stock/',
+    var response = await http.post('http://172.20.10.3:8080/apistock/stock/',
         headers: {"Content-Type": "application/json"},
         body: JSON.jsonEncode({
           "nombre": myController.text,
@@ -35,7 +35,10 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
           "cantidad": myController3.text,
         }));
 
-    Navigator.of(context).pop();
+        if (response.statusCode == 201){
+          Navigator.of(context).pop();
+        }
+
     // Navigator.push(context, MaterialPageRoute(builder: (context) => PaginaVisualizacion()));
   }
 
@@ -54,6 +57,7 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
               children: <Widget>[
                 TextField(
                   controller: myController,
+                  maxLength: 10,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Ingresar titutlo',
@@ -65,6 +69,7 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
                 ),
                 TextField(
                   controller: myController2,
+                  maxLength: 30,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Ingresar descripcion',
@@ -77,6 +82,7 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
                 TextField(
                   keyboardType: TextInputType.number,
                   controller: myController3,
+                  maxLength: 3,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Ingresar cantidad',

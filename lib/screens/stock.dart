@@ -65,7 +65,6 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
                 ),
                 itemCount: stocklist.length,
                 itemBuilder: (BuildContext context, int i) {
-                  print(stocklist.length);
                   if (stocklist.isEmpty) {
                     return Center(
                       child: CircularProgressIndicator(),
@@ -76,24 +75,25 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
+                          CircleAvatar(
+                            child: Text(stocklist[i].cantidad.toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18)),
+                          ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
-                                  Text(stocklist[i].cantidad.toString(),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18)),
-                                  Text(' | ' + stocklist[i].nombre,
+                                  Text(stocklist[i].nombre,
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18)),
                                 ],
                               ),
                               Container(
-                                width: 280,
+                                width: 240,
                                 child: Text(stocklist[i].descripcion),
                               )
                             ],
