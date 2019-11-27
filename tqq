@@ -1,0 +1,53 @@
+[33mcommit 0dd046bbc890455b4226d222900ab01c6b59446e[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Sencha <benja.gilardini@gmail.com>
+Date:   Wed Nov 27 11:06:07 2019 -0300
+
+    Agrego auto recarga en el home del stock
+
+[33mcommit d78f46df53a213d0d8058b467c54a3ca55cf864c[m
+Author: Sencha <benja.gilardini@gmail.com>
+Date:   Mon Nov 25 15:26:47 2019 -0300
+
+    Agrego diseno y cambio los permisos en textfields
+
+[33mcommit f6ded4ed1d4bbb4e44618821b24cc1017aec6407[m
+Author: Sencha <benja.gilardini@gmail.com>
+Date:   Mon Nov 25 15:05:39 2019 -0300
+
+    Boton para refrescar la pagina
+
+[33mcommit d3d85fca0b92d542c1bc5fdc484a351daf204291[m
+Author: Sencha <benja.gilardini@gmail.com>
+Date:   Mon Nov 25 13:32:07 2019 -0300
+
+    Agrego metodo post en la funcion del boton agregar
+
+[33mcommit 6f5a63869f3f16a1e8e056f59f2083e4d55c7aa6[m
+Author: Sencha <benja.gilardini@gmail.com>
+Date:   Mon Nov 25 12:07:56 2019 -0300
+
+    Funcion get y delete funcionando
+
+[33mcommit 5a78c9902207021b80d12e950076bb76a33c86c6[m
+Author: Sencha <benja.gilardini@gmail.com>
+Date:   Thu Nov 21 22:13:00 2019 -0300
+
+    Agrego funcion al boton guardar del stock y agrego funcion de eliminar stock
+
+[33mcommit a6c89ef9881885649d16282780a25bb6a13d0ad3[m
+Author: Sencha <benja.gilardini@gmail.com>
+Date:   Thu Nov 21 22:12:39 2019 -0300
+
+    Agrego funcion al boton guardar del stock y agrego funcion de eliminar stock
+
+[33mcommit b6e14a60ecf0b1c4fff9f84c12a056701e3e9d59[m
+Author: Sencha <benja.gilardini@gmail.com>
+Date:   Thu Nov 14 09:41:58 2019 -0300
+
+    Create project structure
+
+[33mcommit 54eb9459aae2bbf660ef01631264ed33542ec70b[m
+Author: Sencha <benja.gilardini@gmail.com>
+Date:   Tue Nov 5 13:03:09 2019 -0300
+
+    Project estructure
