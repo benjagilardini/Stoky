@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
 import 'package:stocky/screens/createstock.dart';
@@ -14,9 +16,17 @@ class PaginaVisualizacion extends StatefulWidget {
 
 class _PaginaVisualState extends State<PaginaVisualizacion> {
   var stocklist = <Stocked>[];
+  Timer timer;
+
+  @override
+  void initState() { 
+    getJsonData();
+    timer = Timer.periodic(Duration(seconds: 1), (Timer t) => getJsonData());
+    super.initState();
+  }
 
   getJsonData() async {
-    var response = await http.get('http://172.20.10.3:8080/apistock/stock/');
+    var response = await http.get('http://10.0.2.2:8000/apistock/stock/');
     print(response.body);
 
     setState(() {
@@ -29,15 +39,9 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
 
   _makeDeleteRequest(int id) async {
     await http.delete(
-        'http://172.20.10.3:8080/apistock/stock/' + id.toString() + '/');
+        'http://10.0.2.2:8000/apistock/stock/' + id.toString() + '/');
     stocklist.removeWhere((item) => item.id == id);
     setState(() {});
-  }
-
-  @override
-  void initState() {
-    getJsonData();
-    super.initState();
   }
 
   @override
@@ -50,7 +54,9 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
               icon: const Icon(Icons.refresh),
               tooltip: 'Refresh',
               onPressed: () {
-                getJsonData();
+                Future.delayed(const Duration(milliseconds: 500), () {
+                  getJsonData();
+                });
               }),
         ],
       ),
@@ -62,6 +68,7 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
               child: ListView.separated(
                 separatorBuilder: (context, index) => Divider(
                   color: Colors.black,
+                  
                 ),
                 itemCount: stocklist.length,
                 itemBuilder: (BuildContext context, int i) {

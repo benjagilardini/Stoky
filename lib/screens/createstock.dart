@@ -27,7 +27,7 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
   }
 
   _addStock() async {
-    var response = await http.post('http://172.20.10.3:8080/apistock/stock/',
+    var response = await http.post('http://10.0.2.2:8000/apistock/stock/',
         headers: {"Content-Type": "application/json"},
         body: JSON.jsonEncode({
           "nombre": myController.text,
