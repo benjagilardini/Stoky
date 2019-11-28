@@ -12,7 +12,7 @@ class MiApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Stocky',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.red,
         ),
         home: PaginaVisualizacion(),
       ),

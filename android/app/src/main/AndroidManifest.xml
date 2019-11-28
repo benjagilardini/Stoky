@@ -9,7 +9,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="stocky"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/verdadero">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -26,8 +26,7 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
   }
 
   getJsonData() async {
-    var response = await http.get('http://10.0.2.2:8000/apistock/stock/');
-    print(response.body);
+    var response = await http.get('http://172.20.10.3:8080/apistock/stock/');
 
     setState(() {
       stocklist.clear();
@@ -39,7 +38,7 @@ class _PaginaVisualState extends State<PaginaVisualizacion> {
 
   _makeDeleteRequest(int id) async {
     await http.delete(
-        'http://10.0.2.2:8000/apistock/stock/' + id.toString() + '/');
+        'http://172.20.10.3:8080/apistock/stock/' + id.toString() + '/');
     stocklist.removeWhere((item) => item.id == id);
     setState(() {});
   }
