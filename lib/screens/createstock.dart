@@ -35,9 +35,9 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
           "cantidad": myController3.text,
         }));
 
-        if (response.statusCode == 201){
-          Navigator.of(context).pop();
-        }
+    if (response.statusCode == 201) {
+      Navigator.of(context).pop();
+    }
 
     // Navigator.push(context, MaterialPageRoute(builder: (context) => PaginaVisualizacion()));
   }
@@ -48,11 +48,11 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
       appBar: AppBar(
         title: Text("Agregar"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: <Widget>[
-            Column(
+      body: ListView(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 TextField(
@@ -115,8 +115,8 @@ class _PaginaCreaciState extends State<PaginaCreacion> {
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
